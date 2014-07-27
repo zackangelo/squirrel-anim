@@ -32,6 +32,24 @@
                 top: 160px;
             }
             
+            .dollar-amount { 
+                font-family: 'Times New Roman'; 
+                font-weight: bold;
+                font-size: 40px;
+                position: absolute; 
+                left: 480px;
+                top: 400px;
+                color: yellow;
+                opacity: 1;
+                transition-property: top, opacity; 
+                transition-duration: 1s; 
+            }
+            
+            .dollar-amount.animated { 
+                top: 220px;
+                opacity: 0;
+            }
+            
         </style>
         <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.js"></script>
         
@@ -56,10 +74,6 @@
                 }
             }
             
-            function showDollarAmount() { 
-                
-            }
-            
             var arc = [ 
                 { x: "+=20px", y: "-=20px" },
                 { x: "+=40px", y: "+=20px" }   
@@ -71,17 +85,22 @@
             /** 
              * Creates a new acorn and triggers the throwing animation 
              */ 
-            function throwAcorn() { 
+            function throwAcorn(dollarAmount) { 
                 if(acornIndex < MAX_ACORNS) { 
                     var acornAnim = $(animOuter); 
+                    var ai = acornIndex++; 
                     
-                    acornAnim.append('<div class="acorn ready-to-throw a'+acornIndex+'"></div>');
-                    var k = RESTING_KEYFRAMES[acornIndex]; 
-                    var acorn = $(".acorn.a"+acornIndex);
+                    acornAnim.append('<div class="acorn ready-to-throw a'+ai+'"></div>');
+                    
+                    var k = RESTING_KEYFRAMES[ai]; 
+                    var acorn = $(".acorn.a"+ai);
+                    
+                    acornAnim.append('<div class="dollar-amount a'+ai+'">'+dollarAmount+'</div>');
                     
                     acorn.animate({ 
                         left: arc[0].x, top: arc[0].y 
                     },arcStepDuration, arcEasing, function() { 
+                        $('.dollar-amount.a'+ai).addClass('animated'); 
                         acorn.animate({ 
                             left: arc[1].x, top: arc[1].y 
                         },arcStepDuration, arcEasing, function() { 
@@ -89,9 +108,7 @@
                                 left: k.x, top: k.y 
                             }, arcStepDuration);
                         }); 
-                    }); 
-                    
-                    acornIndex++;
+                    });
                 }
             }
             
@@ -102,9 +119,8 @@
     </head>
         
     <body>
-        <button onclick="throwAcorn()">Throw Acorn</button>
+        <button onclick="throwAcorn('$1.00')">Throw Acorn</button>
         <div class="acorn-anim"> 
-            <div class="acorn ready-to-throw"></div>
         </div>
     </body>
 </html>
