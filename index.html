@@ -6,16 +6,15 @@
         <style type="text/css"> 
             body { 
                 background-color: white; 
-                display: flex; 
             }
             
             .acorn-anim { 
-                margin: auto; 
                 width: 602px;
                 height: 485px; 
                 background-image: url(animbg.jpg); 
-                background-size: contain;
+                background-size: cover;
                 background-repeat: no-repeat;
+                background-position: 0px 0px;
             }
             
             .acorn { 
@@ -29,140 +28,10 @@
             
             /* acorn in squirrel's hand */ 
             .acorn.ready-to-throw {  
-                left: 633px;
-                top: 180px;
-                animation-duration: 3s;
-                
+                left: 420px;
+                top: 160px;
             }
             
-            /* acorn resting positions */ 
-            .acorn.resting.a1 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a2 { 
-                left: 720px;
-                top: 485px;
-            }
-            .acorn.resting.a3 { 
-                left: 750px;
-                top: 480px;
-            }
-            
-            .acorn.resting.a4 { 
-                left: 730px;
-                top: 470px;
-            }
-            
-            .acorn.resting.a5 { 
-                left: 720px;
-                top: 500px;
-            }
-            
-            .acorn.resting.a6 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a7 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a8 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a9 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a10 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a11 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a12 { 
-                left: 740px;
-                top: 510px;
-            }
-            .acorn.resting.a13 {
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a14 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a15 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a16 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a17 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a18 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a19 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a20 { 
-                left: 740px;
-                top: 510px;
-            }
-            .acorn.resting.a21 { 
-                left: 740px;
-                top: 510px;
-            }
-            .acorn.resting.a22 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a23 { 
-                left: 740px;
-                top: 510px;
-            }
-            .acorn.resting.a24 { 
-                left: 740px;
-                top: 510px;
-            }
-            .acorn.resting.a25 { 
-                left: 740px;
-                top: 510px;
-            }
-            .acorn.resting.a26 { 
-                left: 740px;
-                top: 510px;
-            }
-            
-            .acorn.resting.a27 { 
-                left: 740px;
-                top: 510px;
-            }
         </style>
         <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.js"></script>
         
@@ -171,26 +40,19 @@
             var animOuter       = ".acorn-anim";
             
             //server parameters
-            var EXISTING_ACORNS   = 5; 
+            var EXISTING_ACORNS   = 0; 
             var NUMBER_TO_THROW   = 1; 
             var DOLLAR_AMOUNT     = "$1.00";
             var MAX_ACORNS        = 27;
             
-            var acornIndex       = EXISTING_ACORNS + 1; 
+            var RESTING_KEYFRAMES =[{"id":"a1","x":540,"y":470},{   "id":"a2","x":520,"y":445},{"id":"a3","x":550,"y":440},{"id":"a4","x":530,"y":430},{"id":"a5","x":520,"y":460},{"id":"a6","x":540,"y":470},{"id":"a7","x":540,"y":470},{"id":"a8","x":540,"y":470},{"id":"a9","x":540,"y":470},{"id":"a10","x":540,"y":470},{"id":"a11","x":540,"y":470},{"id":"a12","x":540,"y":470},{"id":"a13","x":540,"y":470},{"id":"a14","x":540,"y":470},{"id":"a15","x":540,"y":470},{"id":"a16","x":540,"y":470},{"id":"a17","x":540,"y":470},{"id":"a18","x":540,"y":470},{"id":"a19","x":540,"y":470},{"id":"a20","x":540,"y":470},{"id":"a21","x":540,"y":470},{"id":"a22","x":540,"y":470},{"id":"a23","x":540,"y":470},{"id":"a24","x":540,"y":470},{"id":"a25","x":540,"y":470},{"id":"a26","x":540,"y":470},{"id":"a27","x":540,"y":470}];
             
-            
-            function acornAnimDidStart() { 
-                
-            }
-            
-            function acornAnimDidFinish() { 
-                
-            }
+            var acornIndex       = EXISTING_ACORNS;
             
             function createExistingAcorns() { 
                 var acornAnim = $(animOuter); 
                 for(var i=0;i<EXISTING_ACORNS;i++) { 
-                    acornAnim.append('<div class="acorn resting a'+i+'"></div>');
+                    acornAnim.append('<div class="acorn a'+i+'"></div>');
                 }
             }
             
@@ -198,13 +60,37 @@
                 
             }
             
+            var arc = [ 
+                { x: "+=20px", y: "-=20px" },
+                { x: "+=40px", y: "+=20px" }   
+            ];
+            
+            var arcStepDuration = 200; 
+            var arcEasing = "linear";
+            
             /** 
              * Creates a new acorn and triggers the throwing animation 
              */ 
             function throwAcorn() { 
-                var acornAnim = $(animOuter); 
-                if(acornIndex <= MAX_ACORNS) { 
+                if(acornIndex < MAX_ACORNS) { 
+                    var acornAnim = $(animOuter); 
+                    
                     acornAnim.append('<div class="acorn ready-to-throw a'+acornIndex+'"></div>');
+                    var k = RESTING_KEYFRAMES[acornIndex]; 
+                    var acorn = $(".acorn.a"+acornIndex);
+                    
+                    acorn.animate({ 
+                        left: arc[0].x, top: arc[0].y 
+                    },arcStepDuration, arcEasing, function() { 
+                        acorn.animate({ 
+                            left: arc[1].x, top: arc[1].y 
+                        },arcStepDuration, arcEasing, function() { 
+                            acorn.animate({ 
+                                left: k.x, top: k.y 
+                            }, arcStepDuration);
+                        }); 
+                    }); 
+                    
                     acornIndex++;
                 }
             }
@@ -218,6 +104,7 @@
     <body>
         <button onclick="throwAcorn()">Throw Acorn</button>
         <div class="acorn-anim"> 
+            <div class="acorn ready-to-throw"></div>
         </div>
     </body>
 </html>
